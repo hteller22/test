@@ -176,3 +176,35 @@ def sales_Dummy_Data():
     # Combine the four lists into a pandas DataFrame
     df = pd.DataFrame({'month':months,'advisorID': advisor_id, 'number_sales': number_sales, 'total_revenue': total_revenue, 'number_calls': number_calls})
     return df
+
+def Survey_Dummy_Data():
+    np.random.seed(622)
+
+    # Create a list of survey dates
+    survey_dates = pd.date_range(start='2023-03-01', end='2023-03-15', periods=100).strftime('%m/%d/%Y')
+ 
+    # Create a list of customer IDs
+    customer_id = np.concatenate([np.arange(1011, 1101),[None]*10])
+
+    # Create a random list of NPS scores
+    nps_scores = np.concatenate([np.random.randint(0, 9, 30), np.random.randint(9, 11, 70)])
+
+    # Create a random list of whether the customer provided feedback or not
+    feedback = np.random.choice([True, False], size=100, p=[0.7, 0.3])
+
+    # Create a list of advisor IDs based on the customer IDs
+    advisor_id = ['A001', 'A002', 'A003','A004', 'A005', 'A006', 'A007', 'A008', 'A009', 'A010']
+
+
+    # Combine the five lists into a pandas DataFrame
+    df = pd.DataFrame({'survey_date': survey_dates,'customer_id': customer_id, 'advisor_id': np.random.choice(advisor_id, size=100), 'nps_score': nps_scores, 'feedback_provided': feedback,'count':1})
+    return df
+
+
+def nps_category(nps_value):
+    if nps_value >= 9:
+        return ("promoter", 1)
+    elif nps_value >= 7:
+        return ("neutral", 0)
+    else:
+        return ("detractor", -1)
